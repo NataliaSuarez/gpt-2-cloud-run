@@ -11,13 +11,12 @@ merges_file = "aitextgen-merges.txt"
 config = GPT2ConfigCPU()
 
 def start_model():
-    # ai = aitextgen(model="trained_model/pytorch_model.bin", config="trained_model/config.json", to_gpu=False)
     ai = aitextgen(model="trained_model/pytorch_model.bin", vocab_file=vocab_file, merges_file=merges_file, config=config)
     return ai
 
 def b_poem(keywords,temperature=0.7,repetition_penalty=1):
-  text = ai.generate(n=1, max_length=140, prompt=f"KW: {keywords}\\n", temperature=temperature,top_k=40,repetition_penalty=repetition_penalty)
-  return text
+  text = ai.generate_one(prompt=f"KW: {keywords}", temperature=temperature,top_k=40,repetition_penalty=repetition_penalty)
+  return text.replace("\n"," ")
 
 app = Starlette(debug=False)
 ai = start_model()
@@ -37,7 +36,7 @@ async def homepage(request):
         return UJSONResponse({'text': ''},
                              headers=response_header)
 
-    text = b_poem(params.get('prefix', 'La lluvia perecia en tu rostro')[:10],temperature=float(params.get('temperature', 0.7)),repetition_penalty=float(params.get('repetition', 1.0)))
+    text = b_poem(params.get('prefix', 'Río salvaje')[:15],temperature=float(params.get('temperature', 0.7)),repetition_penalty=float(params.get('repetition', 1.0)))
 
     '''
     length=int(params.get('length', 1023))
