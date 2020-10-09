@@ -12,7 +12,7 @@ COPY . .
 # This Dockerfile order allows Docker to cache the checkpoint layer
 # and improve build times if making changes.
 # RUN pip3 --no-cache-dir install tensorflow==2.9.1 aitextgen starlette uvicorn ujson
-RUN pip3 --no-cache-dir install transformers==2.9.1 aitextgen starlette uvicorn ujson
+RUN pip3 --no-cache-dir install transformers==2.9.1 aitextgen starlette uvicorn ujson jinja2 aiofiles
 COPY app.py /
 
 # Clean up APT when done.

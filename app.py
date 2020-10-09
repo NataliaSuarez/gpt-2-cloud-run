@@ -1,11 +1,14 @@
 from starlette.applications import Starlette
 from starlette.responses import UJSONResponse
+from starlette.templating import Jinja2Templates
+from starlette.staticfiles import StaticFiles
 import uvicorn
 import os
 import gc
 from aitextgen import aitextgen
 from aitextgen.utils import GPT2ConfigCPU
 
+templates = Jinja2Templates(directory='templates')
 vocab_file = "aitextgen-vocab.json"
 merges_file = "aitextgen-merges.txt"
 config = GPT2ConfigCPU()
@@ -19,6 +22,7 @@ def b_poem(keywords,temperature=0.7,repetition_penalty=1):
   return text.replace("\n"," ")
 
 app = Starlette(debug=False)
+app.mount('/static', StaticFiles(directory='statics'), name='static')
 ai = start_model()
 
 # Needed to avoid cross-domain issues
@@ -27,6 +31,13 @@ response_header = {
 }
 
 @app.route('/', methods=['GET', 'POST', 'HEAD'])
+async def homepage(request):
+    template = "api_ui.html"
+    context = {"request": request}
+
+    return templates.TemplateResponse(template, context)
+
+@app.route('/api', methods=['GET', 'POST', 'HEAD'])
 async def homepage(request):
     if request.method == 'GET':
         params = request.query_params
