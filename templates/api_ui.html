@@ -112,6 +112,9 @@
   .background-white {
     background-color: #fafafa;
   }
+  /* .background-white {
+    background-color: #fafafa;
+  } */
   .background-gray-3 {
     background: #0c0c0c;
   }
@@ -280,7 +283,7 @@
           }
 
           var gentext = gentext.replace(/\n\n/g, "<div><br></div>").replace(/\n/g, "<div></div>");
-          var html = '<div class=\"gen-box\">' + gentext + '</div><div class="gen-border"></div>';
+          var html = '<div class=\"gen-box background-white\">' + gentext + '</div><div class="gen-border"></div>';
           $(html).appendTo('#model-output').hide().fadeIn("slow");
         },
         error: function (jqXHR, textStatus, errorThrown) {

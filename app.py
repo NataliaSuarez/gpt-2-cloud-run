@@ -1,7 +1,7 @@
 from starlette.applications import Starlette
 from starlette.responses import UJSONResponse
 from starlette.templating import Jinja2Templates
-from starlette.staticfiles import StaticFiles
+# from starlette.staticfiles import StaticFiles
 import uvicorn
 import os
 import gc
@@ -22,7 +22,7 @@ def b_poem(keywords,temperature=0.7,repetition_penalty=1):
   return text.replace("\n"," ")
 
 app = Starlette(debug=False)
-app.mount('/static', StaticFiles(directory='statics'), name='static')
+# app.mount('/static', StaticFiles(directory='statics'), name='static')
 ai = start_model()
 
 # Needed to avoid cross-domain issues
