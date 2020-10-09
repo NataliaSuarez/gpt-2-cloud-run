@@ -1,5 +1,5 @@
 .vscode
 trained_model/*.json
 trained_model/*.bin
-aitexgen-merges.txt
-aitexgen-vocab.json
+aitextgen-merges.txt
+aitextgen-vocab.json
