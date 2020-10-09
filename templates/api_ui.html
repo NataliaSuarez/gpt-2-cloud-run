@@ -1,10 +1,14 @@
 <!DOCTYPE html>
 
 <style>
+  @import url('https://fonts.googleapis.com/css2?family=Fira+Code:wght@300;400;500;600;700&display=swap');
+
   html,
   body {
     height: 95% !important;
     margin: 0 !important;
+    font-family: 'Fira Code', monospace !important;
+    text-align: left !important;
   }
 
   footer {
@@ -48,6 +52,83 @@
     margin-top: 1em;
     border-top: 0.5px solid #d5d5d5;
   }
+  @import url('https://fonts.googleapis.com/css2?family=Fira+Code:wght@300;400;500;600;700&display=swap');
+
+  /* Font */
+  .font-fira-code{
+    font-family: 'Fira Code', monospace !important;
+  }
+  .font-small{
+    font-size: 0.8em;
+  }
+
+  /* elems styles */
+  .link-item {
+    inline-size: max-content;
+    text-decoration: unset;
+  }
+  .link-item:hover {
+    font-weight: 800;
+    color: #fafafa !important;
+    text-decoration: underline;
+  }
+
+  /* Base colors */
+  .color-white {
+    color: #fafafa;
+  }
+  .color-white-imp {
+    color: #fafafa !important;
+  }
+  .color-gray {
+    color: #242b33;
+  }
+  .color-gray-brightness {
+    color: #cecbcb;
+  }
+  .color-gray-intermediate {
+    color: #888787;
+  }
+  .color-gray-strong {
+    color: #333;
+  }
+  .color-gray-blue{
+    color: #3d3d3d;
+  }
+  .color-gray-strong:hover {
+    color: #333;
+    font-weight: 600;
+  }
+  .color-gray-dark {
+    color: #666666;
+  }
+  .color-green {
+    color: #00b92e;
+  }
+  .color-green-2 {
+    color: #01a029;
+  }
+  /* Background colors */
+  .background-white {
+    background-color: #fafafa;
+  }
+  .background-gray-3 {
+    background: #0c0c0c;
+  }
+  .background-gray-3-imp {
+    background: #0c0c0c !important;
+  }
+
+  .background-gray-2 {
+    background: #1d1c1c !important;
+  }
+
+  .background-gray-1 {
+    background: #333;
+  }
+  .background-shadow:hover{
+    background: radial-gradient(circle, rgb(236, 235, 235) 0%, rgba(250,250,250,1) 100%);
+  }
 </style>
 
 <html>
@@ -62,31 +143,31 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.7.5/css/bulma.min.css">
   <script defer src="https://use.fontawesome.com/releases/v5.3.1/js/all.js"></script>
 </head>
-<nav class="navbar" role="navigation" aria-label="main navigation">
+<nav class="navbar background-gray-3-imp" role="navigation" aria-label="main navigation">
   <div class="navbar-brand">
     <span class="icon is-large">
       <span class="fa-stack">
-        <i class="fas fa-circle fa-stack-2x"></i>
-        <i class="fas fa-robot fa-stack-1x fa-inverse"></i>
+        <i class="fas fa-circle fa-stack-2x color-white"></i>
+        <i class="fas fa-robot fa-stack-1x"></i>
       </span>
     </span>
-    <div class="brand-text is-family-code is-uppercase has-text-weight-bold">Keywords to poem</div>
+    <div class="brand-text is-family-code is-uppercase has-text-weight-bold color-white-imp">Keywords to poem</div>
   </div>
 
-  <div id="navbarBasicExample" class="navbar-menu is-active">
+  <div id="navbarBasicExample" class="navbar-menu is-active background-gray-3-imp">
     <div class="navbar-start">
 
 
-      <div class="navbar-item">
-        Generate custom poems from an AI
+      <div class="navbar-item background-gray-3-imp color-white-imp">
+        > Generate custom poems from an AI
       </div>
 
     </div>
   </div>
 </nav>
 
-<body>
-  <section id="main" class="section">
+<body class="background-white">
+  <section id="main" class="section background-white">
     <div class="container">
       <div class="columns is-variable is-5">
         <div class="column is-narrow" style="width: 250px;">
@@ -94,7 +175,7 @@
             <div class="field">
               <label class="label">Keywords</label>
               <div class="control">
-                <textarea id="prefix" class="textarea" type="text" placeholder="it's not your fault/train station" rows="2"></textarea>
+                <textarea id="prefix" class="textarea font-fira-code" type="text" placeholder="it's not your fault/train station" rows="2"></textarea>
               </div>
               <p class="help">Generates poem using specified keywords and phrases</p>
             </div>
@@ -117,7 +198,7 @@
                 <button type="submit" name="submit" id="generate-text" class="button is-link">
                   <span class="icon">
                     <i class="fas fa-md fa-pen"></i>
-                  </span><span>Generate Poem!</span></button>
+                  </span><span class="font-fira-code">Generate Poem!</span></button>
               </span>
 
             </div>
@@ -127,7 +208,7 @@
               <button id="clear-text" class="button is-danger">
                 <span class="icon">
                   <i class="fas fa-md fa-trash-alt"></i>
-                </span><span>Clear Texts</span</button> </span> </div> </div> <div id="model-output" class="column">
+                </span><span class="font-fira-code">Clear Texts</span</button> </span> </div> </div> <div id="model-output" class="column">
                   <p id="tutorial" class="subtitle"><em>Generated poem will appear here!
                       Use the form to configure the parameters and press <strong>Generate Poem</strong>
                       to get your own poem!
@@ -145,14 +226,26 @@
 
   </section>
 
-  <footer class="footer">
+  <footer class="footer background-gray-3-imp">
     <div class="content has-text-centered">
-      <p>
-        Developed by <a href="https://mathigatti.com" target="_blank">Nat</a>. Made using <a href="https://github.com/minimaxir/aitextgen" target="_blank"><strong>aitextgen</strong></a>
-        and <a href="https://github.com/minimaxir/gpt-2-cloud-run" target="_blank"><strong>gpt-2-cloud-run</strong></a>
-        by <a href="https://minimaxir.com" target="_blank">Max Woolf</a>. Original GPT-2 model provided by <a
-          href="https://openai.com" target="_blank">OpenAI</a>. This website content
-        is licensed <a href="http://opensource.org/licenses/mit-license.php" target="_blank">MIT</a>.
+      <p class="color-gray-brightness font-small">
+        Developed by <a href="https://natdeveloper.com" target="_blank" class="link-item color-white-imp">Nat</a>. 
+        
+        Made using 
+          <a href="https://github.com/minimaxir/aitextgen" target="_blank" class="link-item color-white-imp" ><strong>aitextgen</strong></a>
+        and 
+          <a href="https://github.com/minimaxir/gpt-2-cloud-run" target="_blank" class="link-item color-white-imp"><strong>gpt-2-cloud-run</strong></a>
+        by
+          <a href="https://minimaxir.com" target="_blank" class="link-item color-white-imp">Max Woolf</a>
+        and
+          <a href="https://github.com/mathigatti/gpt-2-cloud-run" target="_blank" class="link-item color-white-imp"><strong>gpt-2-cloud-run fork</strong></a>
+        by
+          <a href="https://mathigatti.com" target="_blank" class="link-item color-white-imp">Mathi Gatti</a>.
+        <br></br>
+          Original GPT-2 model provided by
+          <a href="https://openai.com" target="_blank" class="link-item color-white-imp">OpenAI</a>.
+        <br></br>
+          This website content is licensed <a href="http://opensource.org/licenses/mit-license.php" target="_blank" class="link-item color-white-imp">MIT</a>.
       </p>
     </div>
   </footer>
