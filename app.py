@@ -1,29 +1,34 @@
 from starlette.applications import Starlette
 from starlette.responses import UJSONResponse
-import gpt_2_simple as gpt2
-import tensorflow as tf
 import uvicorn
 import os
 import gc
+from aitextgen import aitextgen
+from aitextgen.utils import GPT2ConfigCPU
+
+vocab_file = "aitextgen-vocab.json"
+merges_file = "aitextgen-merges.txt"
+config = GPT2ConfigCPU()
+
+def start_model():
+    # ai = aitextgen(model="trained_model/pytorch_model.bin", config="trained_model/config.json", to_gpu=False)
+    ai = aitextgen(model="trained_model/pytorch_model.bin", vocab_file=vocab_file, merges_file=merges_file, config=config)
+    return ai
+
+def b_poem(keywords,temperature=0.7,repetition_penalty=1):
+  text = ai.generate(n=1, max_length=140, prompt=f"KW: {keywords}\\n", temperature=temperature,top_k=40,repetition_penalty=repetition_penalty)
+  return text
 
 app = Starlette(debug=False)
-
-sess = gpt2.start_tf_sess(threads=1)
-gpt2.load_gpt2(sess)
+ai = start_model()
 
 # Needed to avoid cross-domain issues
 response_header = {
     'Access-Control-Allow-Origin': '*'
 }
 
-generate_count = 0
-
-
 @app.route('/', methods=['GET', 'POST', 'HEAD'])
 async def homepage(request):
-    global generate_count
-    global sess
-
     if request.method == 'GET':
         params = request.query_params
     elif request.method == 'POST':
@@ -32,26 +37,13 @@ async def homepage(request):
         return UJSONResponse({'text': ''},
                              headers=response_header)
 
-    text = gpt2.generate(sess,
-                         length=int(params.get('length', 1023)),
-                         temperature=float(params.get('temperature', 0.7)),
-                         top_k=int(params.get('top_k', 0)),
-                         top_p=float(params.get('top_p', 0)),
-                         prefix=params.get('prefix', '')[:500],
-                         truncate=params.get('truncate', None),
-                         include_prefix=str(params.get(
-                             'include_prefix', True)).lower() == 'true',
-                         return_as_list=True
-                         )[0]
+    text = b_poem(params.get('prefix', 'La lluvia perecia en tu rostro')[:10],temperature=float(params.get('temperature', 0.7)),repetition_penalty=float(params.get('repetition', 1.0)))
 
-    generate_count += 1
-    if generate_count == 8:
-        # Reload model to prevent Graph/Session from going OOM
-        tf.reset_default_graph()
-        sess.close()
-        sess = gpt2.start_tf_sess(threads=1)
-        gpt2.load_gpt2(sess)
-        generate_count = 0
+    '''
+    length=int(params.get('length', 1023))
+    top_k=int(params.get('top_k', 0))
+    top_p=float(params.get('top_p', 0))
+    '''
 
     gc.collect()
     return UJSONResponse({'text': text},
