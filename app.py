@@ -6,15 +6,12 @@ import uvicorn
 import os
 import gc
 from aitextgen import aitextgen
-from aitextgen.utils import GPT2ConfigCPU
+# from aitextgen.utils import GPT2ConfigCPU
 
 templates = Jinja2Templates(directory='templates')
-vocab_file = "aitextgen-vocab.json"
-merges_file = "aitextgen-merges.txt"
-config = GPT2ConfigCPU()
 
 def start_model():
-    ai = aitextgen(model="trained_model/pytorch_model.bin", vocab_file=vocab_file, merges_file=merges_file, config=config)
+    ai = aitextgen(model="trained_model/pytorch_model.bin", config="trained_model/config.json", to_gpu=False)
     return ai
 
 def b_poem(keywords,temperature=0.7,repetition_penalty=1):
